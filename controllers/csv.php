@@ -2,21 +2,30 @@
 require_once "../model/model.php";
 
 
-
 if (isset($_GET['error_message'])) {
     $error_message = $_GET['error_message'];
 } else if (isset($_GET['confirm_message'])) {
     $confirm_message = $_GET['confirm_message'];
 }
 
+
 $projects = get_all_projects();
 $columnNames = get_column_names();
 $fileName = 'projects'. time() . '.csv';
 $fileContent = "";
 
-foreach ($projects as $projects) {
-    echo $projects["id"] . "; " . $projects["title"] . "; " . $projects["category"] . "; " . "\n";
+foreach ($columnNames as $column) {
+        echo $column[0] . "; ";
+    }
+    echo "\n";
+foreach ($projects as $project) {
+        
+    
+    echo $project["id"] . "; " . $project["title"] . "; " . $project["category"] . "; " . "\n";
 }
+
+
+
 
 if (is_writable($fileName)) {
 
@@ -34,12 +43,12 @@ if (is_writable($fileName)) {
 
     fclose($fp);
 }
-echo $columnNames;
+
+echo $fileContent;
 
 header("Content-Description: File Transfer");
 header("Content-Disposition: attachment; filename=".$fileName);
 header("Content-Type: application/csv; "); 
-
 
 
 

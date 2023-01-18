@@ -30,7 +30,7 @@ function get_column_names() {
         WHERE TABLE_NAME = "projects"';
         $columns = $connection->query($sql);
 
-        return $projects;
+        return $columns;
     } catch (PDOException $err) {
         echo $sql . "<br>" . $err->getMessage();
         exit;
