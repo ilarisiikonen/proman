@@ -21,13 +21,29 @@ function get_all_projects() {
     }
 }
 
-function get_column_names() {
+function get_project_column_names() {
     try {
         global $connection;
 
         $sql = 'SELECT COLUMN_NAME
         FROM INFORMATION_SCHEMA.COLUMNS
         WHERE TABLE_NAME = "projects"';
+        $columns = $connection->query($sql);
+
+        return $columns;
+    } catch (PDOException $err) {
+        echo $sql . "<br>" . $err->getMessage();
+        exit;
+    }
+}
+
+function get_tasks_column_names() {
+    try {
+        global $connection;
+
+        $sql = 'SELECT COLUMN_NAME
+        FROM INFORMATION_SCHEMA.COLUMNS
+        WHERE TABLE_NAME = "tasks"';
         $columns = $connection->query($sql);
 
         return $columns;

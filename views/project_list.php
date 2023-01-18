@@ -18,6 +18,9 @@ if (isset($confirm_message)) {
 
     <h1><?php echo $title . " (" . $projectCount . ")" ?></h1>
 
+
+    <button><a href="/~e2101365/php/proman/controllers/csv.php">Download CSV</a></button>
+
     <!-- if data missing -->
     <?php if ($projectCount == 0) { ?>
         <div>
