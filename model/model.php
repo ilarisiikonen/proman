@@ -89,7 +89,19 @@ function get_project($id) {
 
 
 
+function get_json() {
+    try {
+        global $connection;
 
+        $sql = 'SELECT * FROM projects ORDER BY id ASC';
+        $result = $connection->query($sql);
+
+        return $result;
+    } catch (PDOException $err) {
+        echo $sql . "<br>" . $err->getMessage();
+        exit;
+    }
+}
 
 
 
@@ -172,6 +184,7 @@ function get_task($id)
 }
 
 //ADD task
+
 function add_task($id, $title, $date, $time, $project_id)
 {
     try {
