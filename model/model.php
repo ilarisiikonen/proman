@@ -21,13 +21,29 @@ function get_all_projects() {
     }
 }
 
-function get_column_names() {
+function get_project_column_names() {
     try {
         global $connection;
 
         $sql = 'SELECT COLUMN_NAME
         FROM INFORMATION_SCHEMA.COLUMNS
         WHERE TABLE_NAME = "projects"';
+        $columns = $connection->query($sql);
+
+        return $columns;
+    } catch (PDOException $err) {
+        echo $sql . "<br>" . $err->getMessage();
+        exit;
+    }
+}
+
+function get_tasks_column_names() {
+    try {
+        global $connection;
+
+        $sql = 'SELECT COLUMN_NAME
+        FROM INFORMATION_SCHEMA.COLUMNS
+        WHERE TABLE_NAME = "tasks"';
         $columns = $connection->query($sql);
 
         return $columns;
@@ -84,6 +100,21 @@ function get_all_tasks() {
 
         $sql = 'SELECT tasks.id AS id, tasks.title AS title, tasks.date_task AS Date, tasks.time_task AS Time, tasks.project_id AS Project_ID, DATE_FORMAT(tasks.date_task, "%d %M %Y") AS ttime, projects.title AS Title FROM tasks LEFT JOIN projects ON projects.id = tasks.project_id
         ORDER BY projects.title ASC, tasks.date_task DESC';
+        $tasks= $connection->query($sql);
+
+
+        return $tasks;
+    } catch (PDOException $err) {
+        echo $sql . "<br>" . $err->getMessage();
+        exit;
+    }
+}
+
+function get_tasks_reminder() {
+    try {
+        global $connection;
+
+        $sql = 'SELECT * FROM tasks WHERE date_task = CURDATE() + 2';
         $tasks= $connection->query($sql);
 
 

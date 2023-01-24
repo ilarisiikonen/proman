@@ -9,19 +9,19 @@ if (isset($_GET['error_message'])) {
 }
 
 
-$projects = get_all_projects();
-$columnNames = get_project_column_names();
-$fileName = 'projects'. time() . '.csv';
+$tasks = get_all_tasks();
+$columnNames = get_tasks_column_names();
+$fileName = 'tasks'. time() . '.csv';
 $fileContent = "";
 
 foreach ($columnNames as $column) {
         echo $column[0] . "; ";
     }
     echo "\n";
-foreach ($projects as $project) {
+foreach ($tasks as $task) {
         
     
-    echo $project["id"] . "; " . $project["title"] . "; " . $project["category"] . "; " . "\n";
+    echo $task["id"] . "; " . $task["title"] . "; " . $task["Date"] . "; " . $task["ttime"] . "; " . $task["Project_ID"] . "\n";
 }
 
 
