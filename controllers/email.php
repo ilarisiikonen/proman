@@ -68,3 +68,9 @@ function sendEmail($to, $subject, $txt, $headers) {
           echo "Error!";
   }
 ?>
+  if (sendEmail($to, $subject, $txt, $headers)) {
+          echo "Mail sent!";
+  } else {
+          echo "Error!";
+  }
+?>

@@ -25,3 +25,11 @@ SELECT tasks.id AS ID, tasks.title AS Title, tasks.date_task AS Date, tasks.time
 FROM tasks
 LEFT JOIN projects ON projects.id = tasks.project_id
 ORDER BY projects.title ASC, tasks.date_task DESC
+
+
+
+SELECT JSON_OBJECT('id', p.id, 'title', p.title, 'category', p.category, 'task_title', t.title, 'date', t.date_task)
+FROM projects AS p
+RIGHT JOIN tasks AS t
+ON p.id = t.project_id
+

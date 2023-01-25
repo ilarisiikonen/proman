@@ -66,8 +66,8 @@ function get_tasks_column_names() {
         echo $sql . "<br>" . $err->getMessage();
         exit;
     }
-
 }
+
 
 
 function get_all_projects_count() {
@@ -101,6 +101,7 @@ function get_project($id) {
         exit;
     }
 }
+
 
 
 
@@ -219,6 +220,7 @@ function get_task($id)
 }
 
 //ADD task
+
 
 function add_task($id, $title, $date, $time, $project_id)
 {
