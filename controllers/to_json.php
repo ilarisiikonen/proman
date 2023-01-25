@@ -1,37 +1,28 @@
 <?php
+require_once "../model/model.php";
+$jsons = get_json();
+$fileName = 'proman'. time() . '.json';
+$fileContent = "";
 
-<<<<<<< HEAD
-json_object kantaan
 
-
-=======
-global $connection;
-$sql = 'SELECT * FROM projects ORDER BY id ASC';
-$result = $connection->query($sql);
-  
  
-$emparray = array();
-while($row = $result)
-{
-    $emparray[] = $row;
+/* print_r($jsons); */
+
+/* foreach ($jsons as $json) {
+    echo json_encode($json);
+} */
+
+foreach ($jsons as $json) {
+    echo $json[0] ;
+    exit;
 }
-json_encode($emparray)
+//for loop foreach 
+/* echo json_decode($jsons); */
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-/* 
 if (is_writable($fileName)) {
 
     if(!$fp = fopen($fileName, 'w')) {
@@ -45,17 +36,15 @@ if (is_writable($fileName)) {
 
 
     echo $fileContent;
+    
 
     fclose($fp);
 }
- */
+ 
+echo $fileContent;
 
-/*
-$fileName = 'proman'. time() . '.json';
-$fileContent = "";
 header("Content-Description: File Transfer");
 header("Content-Disposition: attachment; filename=".$fileName);
-header("Content-Type: application/csv; ");  */
+header("Content-Type: application/json; "); 
 
->>>>>>> 4a18ddf71a60d660c10803eb727e6ea0aa8d7236
 ?>

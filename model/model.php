@@ -93,7 +93,10 @@ function get_json() {
     try {
         global $connection;
 
-        $sql = 'SELECT * FROM projects ORDER BY id ASC';
+        /* $sql = 'SELECT JSON_OBJECT(id, p.id, title, p.title, category, p.category, task_title, t.title, date, t.date_task) FROM projects AS p RIGHT JOIN tasks AS t ON p.id = t.project_id'; */
+        $sql = 'SELECT JSON_OBJECT("id", p.id, "title", p.title, "category", p.category, "task_title", t.title, "date", t.date_task) FROM projects AS p RIGHT JOIN tasks AS t ON p.id = t.project_id';
+
+        
         $result = $connection->query($sql);
 
         return $result;
@@ -102,6 +105,8 @@ function get_json() {
         exit;
     }
 }
+
+
 
 
 
