@@ -1,6 +1,15 @@
 <?php
 require_once "../model/model.php";
-$jsons = get_jsons();
+?>
+<form method="get">
+    <input name="project_id">
+    <input type="submit">
+</form>
+
+<?php
+
+$jsons = get_jsons($_GET['project_id']);
+
 $fileName = 'proman'. time() . '.json';
 $fileContent = array();
 
