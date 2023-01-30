@@ -2,7 +2,7 @@
 require_once "../model/model.php";
 ?>
 <form method="get">
-    <input name="project_id" value="">
+    <input name="project_id">
     <input type="submit">
 </form>
 

@@ -241,7 +241,7 @@ function add_task($id, $title, $date, $time, $project_id, $attachment){
             $new_task = array($title, $date, $time, $id);
             $affectedLines = $statement->execute($new_task);
         }
-        add_file();
+        add_file($attachment, $id);
         return $affectedLines;
     } catch (PDOException $err) {
         echo $sql . "<br>" . $err->getMessage();
@@ -254,7 +254,7 @@ function add_file($attachment, $id) {
         global $connection;
 
        
-        if ($id) {
+/*         if ($id) {
             $sql = 'UPDATE attachment SET attachment = ? WHERE id = ?';
             $statement = $connection->prepare($sql);
             $update_task = array($title, $date, $time, $project_id, $id);
@@ -265,7 +265,7 @@ function add_file($attachment, $id) {
             $new_task = array($title, $date, $time, $id);
             $affectedLines = $statement->execute($new_task);
         }
-
+ */
         add_file();
         return $affectedLines;
     } catch (PDOException $err) {
@@ -273,6 +273,7 @@ function add_file($attachment, $id) {
         exit;
     }
 }
+
 
 
 
