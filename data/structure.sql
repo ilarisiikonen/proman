@@ -17,3 +17,13 @@ CREATE TABLE tasks (
         REFERENCES projects(id)
         ON DELETE CASCADE
 );
+
+CREATE TABLE attachment (
+    id INT(11) AUTO_INCREMENT PRIMARY KEY,
+    attachment VARCHAR(100) NOT NULL,
+    task_id INT(11) NOT NULL,
+    CONSTRAINT fk_att_pro
+        FOREIGN KEY (task_id)
+        REFERENCES tasks(id)
+        ON DELETE CASCADE
+);
