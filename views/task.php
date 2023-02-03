@@ -23,7 +23,7 @@ require 'nav.php';
     }
     ?>
 
-    <form method="post">
+    <form action="upload.php" method="post" enctype="multipart/form-data">
         <label for="project">
             <span>Project:</span>
             <strong><abbr title="required">*</abbr></strong>
@@ -58,12 +58,50 @@ require 'nav.php';
         <input type="number" name="time" id="time"
         value="<?php echo $time; ?>" required>
 
+
+        <label>Attachment:</label>
+        <input type="file" name="fileToUpload" id="fileToUpload">
+
+        <br><br>
+
         
         <?php if (!empty($id)) { ?>
         <input type="hidden" name="id" value="<?php echo $id ?>" />
         <?php } ?>
-        <input type="submit" name="submit"
+        <input type="submit"  name="submit"
         value="<?php echo (isset($id) and (!empty($id))) ? "Update" : "Add";  ?>">
+    </form>
+
+    <br><br>
+
+
+    <form action="upload.php" method="post" enctype="multipart/form-data">
+
+        <label for="task">
+            <span>Task:</span>
+            <strong><abbr title="required">*</abbr></strong>
+        </label>
+
+        <select name="task_id" id="task_id" required>
+            <option value="">Select a task</option>
+            <?php foreach ($tasks as $task) { ?>
+            <option value="<?php echo $task['id'] ?>" 
+            <?php if ($task_id === $task['id']) {echo 'selected';} ?>
+            ><?php echo $task['title'] ?></option>
+            <?php } ?>
+        </select>
+ 
+
+        <label>Attachment:</label>
+        <input type="file" name="fileToUpload" id="fileToUpload">
+
+        <br><br>
+
+        
+        <?php if (!empty($id)) { ?>
+        <input type="hidden" name="id" value="<?php echo $id ?>" />
+        <?php } ?>
+        <input type="submit" value="Upload Image" name="submit">
     </form>
 </div>
 

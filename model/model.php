@@ -21,12 +21,14 @@ function get_all_projects() {
     }
 }
 
-function get_jsons() {
+function get_jsons($project_id) {
     try {
         global $connection;
 
-        $sql = 'SELECT t.title, category, p.title, date_task FROM projects AS p RIGHT JOIN tasks AS t ON p.id = t.project_id';
+        $sql = 'SELECT t.title, category, p.title, date_task FROM projects AS p RIGHT JOIN tasks AS t ON p.id = t.project_id WHERE project_id = ?';
         $jsons = $connection->query($sql);
+        $jsons->bindValue(1, $project_id, PDO::PARAM_INT);
+        $jsons->execute();
 
         return $jsons;
     } catch (PDOException $err) {
@@ -35,6 +37,21 @@ function get_jsons() {
     }
 }
 
+function get_project($id) {
+    try {
+        global $connection;
+
+        $sql = 'SELECT * FROM projects WHERE id = ?';
+        $project = $connection->prepare($sql);
+        $project->bindValue(1, $id, PDO::PARAM_INT);
+        $project->execute();
+
+        return $project->fetch();
+    } catch (PDOException $exception) {
+        echo $sql . "<br>" . $exception->getMessage();
+        exit;
+    }
+}
 
 function get_project_column_names() {
     try {
@@ -86,26 +103,12 @@ function get_all_projects_count() {
     }
 }
 
-function get_project($id) {
-    try {
-        global $connection;
-
-        $sql = 'SELECT * FROM projects WHERE id = ?';
-        $project = $connection->prepare($sql);
-        $project->bindValue(1, $id, PDO::PARAM_INT);
-        $project->execute();
-
-        return $project->fetch();
-    } catch (PDOException $exception) {
-        echo $sql . "<br>" . $exception->getMessage();
-        exit;
-    }
-}
 
 
 
 
-function get_json() {
+
+/* function get_json() {
     try {
         global $connection;
 
@@ -121,7 +124,7 @@ function get_json() {
         exit;
     }
 }
-
+ */
 
 
 
@@ -202,8 +205,7 @@ function add_project($title, $category, $id) {
     }
 }
 
-function get_task($id)
-{
+function get_task($id){
     try {
         global $connection;
 
@@ -219,11 +221,11 @@ function get_task($id)
     }
 }
 
+
 //ADD task
 
 
-function add_task($id, $title, $date, $time, $project_id)
-{
+function add_task($id, $title, $date, $time, $project_id, $attachment){
     try {
         global $connection;
 
@@ -239,13 +241,39 @@ function add_task($id, $title, $date, $time, $project_id)
             $new_task = array($title, $date, $time, $id);
             $affectedLines = $statement->execute($new_task);
         }
-
+        /* add_file(); */
         return $affectedLines;
     } catch (PDOException $err) {
         echo $sql . "<br>" . $err->getMessage();
         exit;
     }
 }   
+
+/* function add_file($attachment, $id) {
+    try {
+        global $connection;
+
+       
+        if ($id) {
+            $sql = 'UPDATE attachment SET attachment = ? WHERE id = ?';
+            $statement = $connection->prepare($sql);
+            $update_task = array($title, $date, $time, $project_id, $id);
+            $affectedLines = $statement->execute($update_task);
+        } else {
+            $sql =  'INSERT INTO attachment(attachment, task_id) VALUES(?, ?)';
+            $statement = $connection->prepare($sql);
+            $new_task = array($title, $date, $time, $id);
+            $affectedLines = $statement->execute($new_task);
+        }
+
+        
+        return $affectedLines;
+    } catch (PDOException $err) {
+        echo $sql . "<br>" . $err->getMessage();
+        exit;
+    }
+}
+ */
 
 
 //title exists
