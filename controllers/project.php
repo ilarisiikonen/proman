@@ -4,38 +4,38 @@ require "common.php";
 
 
 $project_title = '';
-$category = '';
+$project_category = '';
 
-if (isset($_GET['id'])) {
-    list($id, $project_title, $category) = get_project($_GET['id']);
+if (isset($_GET['project_id'])) {
+    list($project_id, $project_title, $project_category) = get_project($_GET['project_id']);
 }
 
 $projects = get_all_projects();
 
 if (isset($_POST['submit'])) {
-    $id = null;
+    $project_id = null;
 
-    if (isset($_POST['id'])) {
-        $id = $_POST['id'];
+    if (isset($_POST['project_id'])) {
+        $project_id = $_POST['project_id'];
     }
 
 
-    $title = escape(trim($_POST['title']));
-    $category = escape($_POST['category']);
+    $project_title = escape(trim($_POST['project_title']));
+    $project_category = escape($_POST['project_category']);
 
-    if (empty($title) || empty($category)) {
-        $error_message = "Title or category empty";
+    if (empty($project_title) || empty($project_category)) {
+        $error_message = "Title or project_category empty";
         
     } else {
-        if (titleExists("projects", $title) && $id == null) {
-            $error_message = "I'm sorry, but looks like \"" . $title . "\" already exists";
+        if (projectTitleExists("projects", $project_title) && $project_id == null) {
+            $error_message = "I'm sorry, but looks like \"" . $project_title . "\" already exists";
         } else {
-            if (add_project($title, $category, $id)) {
+            if (add_project($project_title, $project_category, $project_id)) {
                 header('Refresh:4; url=project_list.php');
-                if (!empty($id)) {
-                    $confirm_message = escape($title) . ' updated succesfully';
+                if (!empty($project_id)) {
+                    $confirm_message = escape($project_title) . ' updated succesfully';
                 } else {
-                    $confirm_message = escape($title) . ' added succesfully';
+                    $confirm_message = escape($project_title) . ' added succesfully';
                 }
             } else {
                 $error_message = "There's something wrong'";

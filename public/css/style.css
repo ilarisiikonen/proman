@@ -92,7 +92,7 @@ nav ul {
   }
   
   /* TABLE */
-  table {
+/*   table {
     margin: 25px auto;
     border-collapse: collapse;
     border: 1px solid #eee;
@@ -129,5 +129,9 @@ nav ul {
   
   .highlight {
     background: yellow;
-  }
+  } */
   
+  img {
+    width: max-content;
+
+  }

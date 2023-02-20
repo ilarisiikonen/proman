@@ -27,7 +27,7 @@ function get_tasks_reminder() {
   try {
       $connection = db_connect();
 
-      $sql = 'SELECT * FROM tasks WHERE date_task = CURDATE() + 2';
+      $sql = 'SELECT * FROM tasks WHERE task_date = CURDATE() + 2';
       $tasks= $connection->query($sql);
 
 
@@ -45,7 +45,7 @@ $tasks = get_tasks_reminder();
 $text = array();
 
 foreach ($tasks as $task) {
-    $text[] = "Title: " . $task["title"] . "\n" . "Date: " . $task["date_task"];
+    $text[] = "Title: " . $task["task_title"] . "\n" . "Date: " . $task["task_date"];
 }
 
  $txt = implode(", ", $text);

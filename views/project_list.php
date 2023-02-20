@@ -33,11 +33,11 @@ if (isset($confirm_message)) {
         <?php foreach ($projects as $project) : ?>
         <li>
             <a href="../controllers/project.php?id=<?php echo $project['id']; ?>">
-                <?php echo escape($project["title"]) ?>
+                <?php echo escape($project["project_title"]) ?>
             </a>
 
             <form method="post">
-            <input type="hidden" value="<?php echo $project["id"]; ?>" name="delete">
+            <input type="hidden" value="<?php echo $project["project_id"]; ?>" name="delete">
             <input type="submit" value="Delete">
             </form>
             

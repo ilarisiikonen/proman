@@ -33,3 +33,27 @@ FROM projects AS p
 RIGHT JOIN tasks AS t
 ON p.id = t.project_id
 
+
+
+<form action="upload.php" method="post" enctype="multipart/form-data">
+
+        <label for="task">
+            <span>Task:</span>
+
+        </label>
+        <select name="task_id" id="task_id">
+            <option value="">Select a task to upload attachment to:</option>
+            <?php foreach ($tasks as $task) { ?>
+            <option value="<?php echo $task['id'] ?>" 
+            <?php if ($id === $task['id']) {echo 'selected';} ?>
+            ><?php echo $task['title'] ?></option>
+            <?php } ?>
+        </select>
+            
+
+        <label>Attachment:</label>
+        <input type="file" name="fileToUpload" id="fileToUpload">
+        <br>
+        <input type="submit" value="Upload File" name="submit">
+    </form>
+

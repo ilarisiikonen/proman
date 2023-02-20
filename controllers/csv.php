@@ -21,7 +21,7 @@ foreach ($columnNames as $column) {
 foreach ($projects as $project) {
         
     
-    echo $project["id"] . "; " . $project["title"] . "; " . $project["category"] . "; " . "\n";
+    echo $project["project_id"] . "; " . $project["project_title"] . "; " . $project["project_category"] . "; " . "\n";
 }
 
 
