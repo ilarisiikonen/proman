@@ -14,13 +14,6 @@ $projects = array();
         array_push($tasksArray, "task id: " . $task['task_id'] . " task name: " .  $task['task_title'] . " project name: " . $task['project_id'] .  " date: " . $task['task_date']);
     }
 
-    
-/* 
-    if(empty($tasks) || empty($projects)) {
-        echo 'No items found';
-        exit;
-    }
- */
 
         if(isset($_GET['tasks'])) {
             echo json_encode($tasksArray, JSON_FORCE_OBJECT);
