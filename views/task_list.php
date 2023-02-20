@@ -32,13 +32,13 @@ if (isset($confirm_message)) {
     <ul>
         <?php foreach ($tasks as $task) : ?>
         <li>
-            <a href="../controllers/task.php?id=<?php echo $task['id']; ?>">
+            <a href="../controllers/task.php?task_id=<?php echo $task['task_id']; ?>">
             <?php
-            echo "Title: " . $task["title"] . " (Date: " . $task["ttime"] . ", Project: " . $task["Project_ID"] .")";
+            echo "Title: " . $task["task_title"] . " (Date: " . $task["task_time"] . ", Project: " . $task["project_id"] .")";
             ?> 
             </a>
             <form method="post">
-            <input type="hidden" value="<?php echo $task["id"]; ?>" name="delete">
+            <input type="hidden" value="<?php echo $task["task_id"]; ?>" name="delete">
             <input type="submit" value="Delete">
             </form>
                         

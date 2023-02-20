@@ -20,6 +20,7 @@ if (isset($_GET['error_message'])) {
 
  $tasks = get_all_tasks();
  $taskCount = get_all_tasks_count();
+/*  $attachments = get_all_attachment(); */
 
  require "../views/task_list.php";
 ?>

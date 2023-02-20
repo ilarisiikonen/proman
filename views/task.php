@@ -1,5 +1,5 @@
 <?php
-if (!empty($_GET['id'])) {
+if (!empty($_GET['task_id'])) {
     $title = 'Update task';
 } else {
     $title = 'Add Task'; 
@@ -23,86 +23,58 @@ require 'nav.php';
     }
     ?>
 
-    <form action="upload.php" method="post" enctype="multipart/form-data">
+    <form method="post" >
         <label for="project">
             <span>Project:</span>
             <strong><abbr title="required">*</abbr></strong>
         </label>
-
+        
         <select name="project_id" id="project_id" required>
             <option value="">Select a project</option>
             <?php foreach ($projects as $project) { ?>
-            <option value="<?php echo $project['id'] ?>" 
-            <?php if ($project_id === $project['id']) {echo 'selected';} ?>
-            ><?php echo $project['title'] ?></option>
+            <option value="<?php echo $project['project_id'] ?>" 
+            <?php if ($project_id === $project['project_id']) {echo 'selected';} ?>
+            ><?php echo $project['project_title'] ?></option>
             <?php } ?>
         </select>
-        <label for="title">
+
+        <label for="task_title">
             <span>Title:</span>
             <strong><abbr title="required">*</abbr></strong>
         </label>
-        <input type="text" placeholder="New task" name="title" id="title"
+        <input type="text" placeholder="New task" name="task_title" id="task_title"
         value="<?php echo $task_title; ?>" required>
 
         <label for="date">
             <span>Date:</span>
             <strong><abbr title="required">*</abbr></strong>
         </label>
-        <input type="date" name="date" id="date"
-        value="<?php echo $date; ?>" required>
+        <input type="date" name="task_date" id="task_date"
+        value="<?php echo $task_date; ?>" required>
 
-        <label for="time">
+        <label for="task_time">
             <span>Time:</span>
             <strong><abbr title="required">*</abbr></strong>
         </label>
-        <input type="number" name="time" id="time"
-        value="<?php echo $time; ?>" required>
+        <input type="number" name="task_time" id="task_time"
+        value="<?php echo $task_time; ?>" required>
 
 
-        <label>Attachment:</label>
-        <input type="file" name="fileToUpload" id="fileToUpload">
+        
 
         <br><br>
 
         
-        <?php if (!empty($id)) { ?>
-        <input type="hidden" name="id" value="<?php echo $id ?>" />
+        <?php if (!empty($task_id)) { ?>
+        <input type="hidden" name="task_id" value="<?php echo $task_id ?>" />
         <?php } ?>
         <input type="submit"  name="submit"
-        value="<?php echo (isset($id) and (!empty($id))) ? "Update" : "Add";  ?>">
+        value="<?php echo (isset($task_id) and (!empty($task_id))) ? "Update" : "Add";  ?>">
     </form>
 
-    <br><br>
+  <!-- Attachment form -->
 
-
-    <form action="upload.php" method="post" enctype="multipart/form-data">
-
-        <label for="task">
-            <span>Task:</span>
-            <strong><abbr title="required">*</abbr></strong>
-        </label>
-
-        <select name="task_id" id="task_id" required>
-            <option value="">Select a task</option>
-            <?php foreach ($tasks as $task) { ?>
-            <option value="<?php echo $task['id'] ?>" 
-            <?php if ($task_id === $task['id']) {echo 'selected';} ?>
-            ><?php echo $task['title'] ?></option>
-            <?php } ?>
-        </select>
- 
-
-        <label>Attachment:</label>
-        <input type="file" name="fileToUpload" id="fileToUpload">
-
-        <br><br>
-
-        
-        <?php if (!empty($id)) { ?>
-        <input type="hidden" name="id" value="<?php echo $id ?>" />
-        <?php } ?>
-        <input type="submit" value="Upload Image" name="submit">
-    </form>
+    
 </div>
 
 <?php

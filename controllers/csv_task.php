@@ -21,7 +21,7 @@ foreach ($columnNames as $column) {
 foreach ($tasks as $task) {
         
     
-    echo $task["task_id"] . "; " . $task["task_title"] . "; " . $task["task_date"] . "; " . $task["task_time"] . "; " . $task["prject_id"] . "\n";
+    echo $task["task_id"] . "; " . $task["task_title"] . "; " . $task["task_date"] . "; " . $task["task_time"] . "; " . $task["project_id"] . "\n";
 }
 
 

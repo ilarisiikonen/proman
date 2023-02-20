@@ -11,7 +11,7 @@ function get_all_projects() {
     try {
         global $connection;
 
-        $sql = 'SELECT * FROM projects ORDER BY id ASC';
+        $sql = 'SELECT * FROM projects ORDER BY project_id ASC';
         $projects = $connection->query($sql);
 
         return $projects;
@@ -25,7 +25,7 @@ function get_jsons($project_id) {
     try {
         global $connection;
 
-        $sql = 'SELECT t.title, category, p.title, date_task FROM projects AS p RIGHT JOIN tasks AS t ON p.id = t.project_id WHERE project_id = ?';
+        $sql = 'SELECT task_title, project_category, project_title, task_date FROM projects RIGHT JOIN tasks ON project_id = tasks.project_id WHERE project_id = ?';
         $jsons = $connection->query($sql);
         $jsons->bindValue(1, $project_id, PDO::PARAM_INT);
         $jsons->execute();
@@ -41,7 +41,7 @@ function get_project($id) {
     try {
         global $connection;
 
-        $sql = 'SELECT * FROM projects WHERE id = ?';
+        $sql = 'SELECT * FROM projects WHERE project_id = ?';
         $project = $connection->prepare($sql);
         $project->bindValue(1, $id, PDO::PARAM_INT);
         $project->execute();
@@ -91,7 +91,7 @@ function get_all_projects_count() {
     try {
         global $connection;
 
-        $sql = 'SELECT COUNT(id) AS nb FROM projects';
+        $sql = 'SELECT COUNT(project_id) AS nb FROM projects';
         $statement = $connection->query($sql)->fetch();
 
         $projectCount = $statement['nb'];
@@ -134,8 +134,8 @@ function get_all_tasks() {
     try {
         global $connection;
 
-        $sql = 'SELECT tasks.id AS id, tasks.title AS title, tasks.date_task AS Date, tasks.time_task AS Time, tasks.project_id AS Project_ID, DATE_FORMAT(tasks.date_task, "%d %M %Y") AS ttime, projects.title AS Title FROM tasks LEFT JOIN projects ON projects.id = tasks.project_id
-        ORDER BY projects.title ASC, tasks.date_task DESC';
+        $sql = 'SELECT tasks.task_id, tasks.task_title, tasks.task_date, tasks.task_time, tasks.project_id, DATE_FORMAT(tasks.task_date, "%d %M %Y"), projects.project_title FROM tasks LEFT JOIN projects ON projects.project_id = tasks.project_id
+        ORDER BY projects.project_title ASC';
         $tasks= $connection->query($sql);
 
 
@@ -150,7 +150,7 @@ function get_tasks_reminder() {
     try {
         global $connection;
 
-        $sql = 'SELECT * FROM tasks WHERE date_task = CURDATE() + 2';
+        $sql = 'SELECT * FROM tasks WHERE task_date = CURDATE() + 2';
         $tasks= $connection->query($sql);
 
 
@@ -166,7 +166,7 @@ function get_all_tasks_count() {
     try {
         global $connection;
 
-        $sql = 'SELECT COUNT(id) AS nb FROM tasks';
+        $sql = 'SELECT COUNT(task_id) AS nb FROM tasks';
         $statement = $connection->query($sql)->fetch();
 
         $taskCount = $statement['nb'];
@@ -179,21 +179,21 @@ function get_all_tasks_count() {
 }
 
 //ADD PROJECT
-function add_project($title, $category, $id) {
+function add_project($project_title, $project_category, $project_id) {
     
     try {
         global $connection;
 
-        if ($id) {
-            $sql = 'UPDATE projects SET title = ?, category = ? WHERE id = ?';
+        if ($project_id) {
+            $sql = 'UPDATE projects SET project_title = ?, project_category = ? WHERE project_id = ?';
         } else {
-            $sql = 'INSERT INTO projects(title, category) VALUES(?, ?)'; 
+            $sql = 'INSERT INTO projects(project_title, project_category) VALUES(?, ?)'; 
         }
         $statement = $connection->prepare($sql);
-        $new_project = array($title, $category);
+        $new_project = array($project_title, $project_category);
 
-        if ($id) {
-            $new_project = array($title, $category, $id);
+        if ($project_id) {
+            $new_project = array($project_title, $project_category, $project_id);
         }
 
         $affectedLines = $statement->execute($new_project);
@@ -205,13 +205,13 @@ function add_project($title, $category, $id) {
     }
 }
 
-function get_task($id){
+function get_task($task_id){
     try {
         global $connection;
 
-        $sql =  'SELECT * FROM tasks WHERE id = ?';
+        $sql =  'SELECT * FROM tasks WHERE task_id = ?';
         $project = $connection->prepare($sql);
-        $project->bindValue(1, $id, PDO::PARAM_INT);
+        $project->bindValue(1, $task_id, PDO::PARAM_INT);
         $project->execute();
 
         return $project->fetch();
@@ -223,25 +223,24 @@ function get_task($id){
 
 
 //ADD task
-
-
-function add_task($id, $title, $date, $time, $project_id, $attachment){
+function add_task($task_id, $task_title, $task_date, $task_time, $project_id)
+{
     try {
         global $connection;
-
+        print_r($_POST);
        
-        if ($id) {
-            $sql = 'UPDATE tasks SET title = ?, date_task = ?, time_task = ?, project_id = ? WHERE id = ?';
+        if ($task_id) {
+            $sql = 'UPDATE tasks SET task_title = ?, task_date = ?, task_time = ?, project_id = ? WHERE project_id = ?';
             $statement = $connection->prepare($sql);
-            $update_task = array($title, $date, $time, $project_id, $id);
+            $update_task = array($task_title, $task_date, $task_time, $project_id, $task_id);
             $affectedLines = $statement->execute($update_task);
         } else {
-            $sql =  'INSERT INTO tasks(title, date_task, time_task, project_id) VALUES(?, ?, ?, ?)';
+            $sql =  'INSERT INTO tasks(task_title, task_date, task_time, project_id) VALUES(?, ?, ?, ?)';
             $statement = $connection->prepare($sql);
-            $new_task = array($title, $date, $time, $id);
+            $new_task = array($task_title, $task_date, $task_time, $project_id);
             $affectedLines = $statement->execute($new_task);
         }
-        /* add_file(); */
+
         return $affectedLines;
     } catch (PDOException $err) {
         echo $sql . "<br>" . $err->getMessage();
@@ -249,21 +248,43 @@ function add_task($id, $title, $date, $time, $project_id, $attachment){
     }
 }   
 
-/* function add_file($attachment, $id) {
+
+
+
+//ATTACHMENT
+
+function get_all_attachment() {
     try {
         global $connection;
 
-       
-        if ($id) {
-            $sql = 'UPDATE attachment SET attachment = ? WHERE id = ?';
+        $sql = 'SELECT tasks.task_id, attachment, task_id, tasks.task_title
+        FROM attachment 
+        LEFT JOIN tasks 
+        ON tasks.task_id = attachment.task_id';
+        $tasks= $connection->query($sql);
+
+
+        return $tasks;
+    } catch (PDOException $err) {
+        echo $sql . "<br>" . $err->getMessage();
+        exit;
+    }
+}
+
+function add_file($attachment, $attachment_id) {
+    try {
+        global $connection;
+        
+        if ($attachment_id) {
+            $sql = 'UPDATE attachment SET attachment = ? WHERE task_id = ?';
             $statement = $connection->prepare($sql);
-            $update_task = array($title, $date, $time, $project_id, $id);
-            $affectedLines = $statement->execute($update_task);
+            $add_file = array($attachment, $attachment_id);
+            $affectedLines = $statement->execute($add_file);
         } else {
             $sql =  'INSERT INTO attachment(attachment, task_id) VALUES(?, ?)';
             $statement = $connection->prepare($sql);
-            $new_task = array($title, $date, $time, $id);
-            $affectedLines = $statement->execute($new_task);
+            $add_file = array($attachment, $attachment_id);
+            $affectedLines = $statement->execute($add_file);
         }
 
         
@@ -273,16 +294,34 @@ function add_task($id, $title, $date, $time, $project_id, $attachment){
         exit;
     }
 }
- */
+
 
 
 //title exists
 
-function titleExists($table, $title) {
+function projectTitleExists($table, $title) {
     try {
         global $connection;
 
-        $sql = 'SELECT title FROM ' . $table . ' WHERE title = ?';
+        $sql = 'SELECT project_title FROM ' . $table . ' WHERE project_title = ?';
+        $statement =$connection->prepare($sql);
+        $statement->execute(array($title));
+
+        if ($statement->rowCount() > 0) {
+            return true;
+        }
+    }
+    catch (PDOException $exception) {
+        echo $sql . "<br>" . $exception->getMessage();
+        exit;
+    }
+}
+
+function taskTitleExists($table, $title) {
+    try {
+        global $connection;
+
+        $sql = 'SELECT task_title FROM ' . $table . ' WHERE task_title = ?';
         $statement =$connection->prepare($sql);
         $statement->execute(array($title));
 
@@ -299,13 +338,13 @@ function titleExists($table, $title) {
 
 //DELETE TASK 
 
-function delete_task($id) {
+function delete_task($task_id) {
     try {
         global $connection;
 
-        $sql = 'DELETE FROM tasks WHERE id = ?';
+        $sql = 'DELETE FROM tasks WHERE task_id = ?';
         $task = $connection->prepare($sql);
-        $task->bindValue(1, $id, PDO::PARAM_INT);
+        $task->bindValue(1, $task_id, PDO::PARAM_INT);
         $task->execute();
 
         return true;
@@ -317,13 +356,13 @@ function delete_task($id) {
 
 //DELETE PROJECT
 
-function delete_project($id) {
+function delete_project($project_id) {
     try {
         global $connection;
 
-        $sql = 'DELETE FROM projects WHERE id = ?';
+        $sql = 'DELETE FROM projects WHERE project_id = ?';
         $project = $connection->prepare($sql);
-        $project->bindValue(1, $id, PDO::PARAM_INT);
+        $project->bindValue(1, $project_id, PDO::PARAM_INT);
         $project->execute();
 
         return true;

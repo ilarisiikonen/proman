@@ -1,12 +1,6 @@
 <?php
 require_once "../model/model.php";
-?>
-<form method="get">
-    <input name="project_id" value="">
-    <input type="submit">
-</form>
 
-<?php
 
 $jsons = get_jsons($_GET['project_id']);
 
