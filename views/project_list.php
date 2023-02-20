@@ -20,6 +20,7 @@ if (isset($confirm_message)) {
 
 
     <button><a href="/~e2101365/php/proman/controllers/csv.php">Download CSV</a></button>
+    <button><a href="/~e2101365/php/proman/controllers/to_json.php?projects">Download JSON</a></button>
 
     <!-- if data missing -->
     <?php if ($projectCount == 0) { ?>

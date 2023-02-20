@@ -1,54 +1,35 @@
 <?php
 require_once "../model/model.php";
 
+$tasks =  get_all_tasks();
+$projects = get_all_projects();
 
-$jsons = get_jsons($_GET['project_id']);
+$tasks = array();
+$projects = array();
 
-?>
-<form method="get">
-    <input name="project_id">
-    <input type="submit">
-</form>
-
-<?php
-
-$jsons = get_jsons($_GET['project_id']);
-
-$fileName = 'proman'. time() . '.json';
-$fileContent = array();
-
-
-
-foreach ($jsons as $json) {
-   $fileContent[] = $json;
-} 
-
-$file = json_encode($fileContent);
-
-
-if (is_writable($fileName)) {
-
-    if(!$fp = fopen($fileName, 'w')) {
-        echo "Cannot open file ($fileName)";
-        exit;
-    }
-    if (fwrite($fp, $file) === FALSE) {
-        echo "Cannot write to file ($fileName)";
-        exit;
+    foreach($projects as $project) {
+            array_push($projectsArray, "project id: " . $project['project_id'] . " project title: " . $project['project_title'] . " project category: " . $project['project_category']);
+        }
+    foreach($tasks as $task) {
+        array_push($tasksArray, "task id: " . $task['task_id'] . " task name: " .  $task['task_title'] . " project name: " . $task['project_id'] .  " date: " . $task['task_date']);
     }
 
-    echo $file;
     
+/* 
+    if(empty($tasks) || empty($projects)) {
+        echo 'No items found';
+        exit;
+    }
+ */
 
-    fclose($fp);
-}
- 
+        if(isset($_GET['tasks'])) {
+            echo json_encode($tasksArray, JSON_FORCE_OBJECT);
+        } else if(isset($_GET['projects'])) {
+            echo json_encode($projectsArray, JSON_FORCE_OBJECT);
+        } else {
+            echo 'No items found';
+            exit;
+        }
 
-
-echo $file;
-
-header("Content-Description: File Transfer");
-header("Content-Disposition: attachment; filename=".$fileName);
-header("Content-Type: application/json; "); 
 
 ?>
