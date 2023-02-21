@@ -10,6 +10,7 @@ require 'nav.php';
 
     <p>an app that helps you track time you spend on your favorite tasks</p>
     </div>
+    
     <?php
     $content = ob_get_clean();
     include 'layout.php';

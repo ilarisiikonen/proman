@@ -53,7 +53,7 @@ require "nav.php";
             <input type="hidden" name="project_id" value="<?php echo $project_id ?>">
         <?php } ?>
 
-        <input type="submit" name="submit" value="<?php echo (isset($project_id) and (!empty($project_id))) ? "Update" : "Add"; ?>" class="submit">
+        <input class="button" type="submit" name="submit" value="<?php echo (isset($project_id) and (!empty($project_id))) ? "Update" : "Add"; ?>" class="submit">
 
 
     </form>

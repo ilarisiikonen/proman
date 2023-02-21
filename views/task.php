@@ -67,7 +67,7 @@ require 'nav.php';
         <?php if (!empty($task_id)) { ?>
         <input type="hidden" name="task_id" value="<?php echo $task_id ?>" />
         <?php } ?>
-        <input type="submit"  name="submit"
+        <input class="button" type="submit"  name="submit"
         value="<?php echo (isset($task_id) and (!empty($task_id))) ? "Update" : "Add";  ?>">
     </form>
     <br><br>
@@ -97,7 +97,7 @@ require 'nav.php';
         <input type="hidden" name="task_id" value="<?php echo $task_id ?>" />
         <?php } ?>
         <input type="file" name="fileToUpload" id="fileToUpload">
-            <input type="submit" value="<?php echo (isset($task_id) and (!empty($task_id))) ? "Update Image" : "Add Image";  ?>" name="submit">
+            <input class="button" type="submit" value="<?php echo (isset($task_id) and (!empty($task_id))) ? "Update Image" : "Add Image";  ?>" name="submit">
     </form> 
     
 </div>

@@ -18,8 +18,8 @@ if (isset($confirm_message)) {
 
     <h1><?php echo $title . " (" . $taskCount . ")" ?></h1>
 
-    <button><a href="/~e2101365/php/proman/controllers/csv_task.php">Download CSV</a></button>
-    <button><a href="/~e2101365/php/proman/controllers/to_json.php?tasks">Download JSON</a></button>
+    <button class="button"><a href="/~e2101365/php/proman/controllers/csv_task.php">Download CSV</a></button>
+    <button class="button"><a href="/~e2101365/php/proman/controllers/to_json.php?tasks">Download JSON</a></button>
 
 
     <!-- if data missing -->
@@ -40,7 +40,7 @@ if (isset($confirm_message)) {
             </a>
             <form method="post">
             <input type="hidden" value="<?php echo $task["task_id"]; ?>" name="delete">
-            <input type="submit" value="Delete">
+            <input class="button" type="submit" value="Delete">
             </form>
                         
         </li>

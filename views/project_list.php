@@ -19,8 +19,8 @@ if (isset($confirm_message)) {
     <h1><?php echo $title . " (" . $projectCount . ")" ?></h1>
 
 
-    <button><a href="/~e2101365/php/proman/controllers/csv.php">Download CSV</a></button>
-    <button><a href="/~e2101365/php/proman/controllers/to_json.php?projects">Download JSON</a></button>
+    <button class="button"><a href="/~e2101365/php/proman/controllers/csv.php">Download CSV</a></button>
+    <button class="button"><a href="/~e2101365/php/proman/controllers/to_json.php?projects">Download JSON</a></button>
 
     <!-- if data missing -->
     <?php if ($projectCount == 0) { ?>
@@ -39,7 +39,7 @@ if (isset($confirm_message)) {
 
             <form method="post">
             <input type="hidden" value="<?php echo $project["project_id"]; ?>" name="delete">
-            <input type="submit" value="Delete">
+            <input class="button" type="submit" value="Delete">
             </form>
             
         </li>
