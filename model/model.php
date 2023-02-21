@@ -271,29 +271,40 @@ function get_all_attachment() {
     }
 }
 
-function add_file($attachment, $attachment_id) {
+
+function add_file($file_path, $task_id, $attachment_id = null) {
     try {
         global $connection;
-        
+        $attachment_data = file_get_contents($file_path);
+
         if ($attachment_id) {
-            $sql = 'UPDATE attachment SET attachment = ? WHERE task_id = ?';
+            $sql = 'UPDATE attachments SET attachment = ? WHERE attachment_id = ?';
             $statement = $connection->prepare($sql);
-            $add_file = array($attachment, $attachment_id);
-            $affectedLines = $statement->execute($add_file);
+            $statement->bindParam(1, $attachment_data, PDO::PARAM_LOB);
+            $statement->bindParam(2, $attachment_id, PDO::PARAM_INT);
         } else {
-            $sql =  'INSERT INTO attachment(attachment, task_id) VALUES(?, ?)';
+            $sql = 'INSERT INTO attachments (attachment, task_id) VALUES (?, ?)';
             $statement = $connection->prepare($sql);
-            $add_file = array($attachment, $attachment_id);
-            $affectedLines = $statement->execute($add_file);
+            $statement->bindParam(1, $attachment_data, PDO::PARAM_LOB);
+            $statement->bindParam(2, $task_id, PDO::PARAM_INT);
         }
 
-        
+        $affectedLines = $statement->execute();
+
+        if ($attachment_id) {
+            echo "File updated successfully"; 
+        } else {
+            echo "File added successfully";
+        }
+
         return $affectedLines;
     } catch (PDOException $err) {
         echo $sql . "<br>" . $err->getMessage();
         exit;
     }
 }
+
+
 
 
 

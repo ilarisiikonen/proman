@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS tasks, projects, attachment; 
+DROP TABLE IF EXISTS attachments, tasks, projects; 
 
 CREATE TABLE projects (
     project_id INT(11) AUTO_INCREMENT PRIMARY KEY,

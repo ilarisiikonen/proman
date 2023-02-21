@@ -13,6 +13,7 @@ if (isset($_GET['task_id'])) {
 }
 
 $projects = get_all_projects();
+$tasks = get_all_tasks();
 
 if (isset($_POST['submit'])) {
     $task_id = null;
@@ -27,8 +28,9 @@ if (isset($_POST['submit'])) {
     $task_title = trim($_POST['task_title']);
     $task_date = trim($_POST['task_date']);
     $task_time = trim($_POST['task_time']);
-    print_r($_POST);
-
+   /*  print_r($_POST);
+    echo "täällä";
+ */
     if (empty($project_id) || empty($task_title) || empty($task_date) || empty($task_time)) {
         $error_message = "One or more fields empty";
     } else {
