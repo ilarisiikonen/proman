@@ -23,3 +23,21 @@ VALUES
     (8, 'Task 8', '2022-12-09', 40, 8),
     (9, 'Task 9', '2022-12-09', 20, 9),
     (10, 'Task 10', '2022-09-01', 25, 10);
+
+
+   INSERT INTO comments
+VALUES
+    (1, 'Cool comment', 1),
+    (2, 'No comment', 2),
+    (3, 'This task is not relevant', 5),
+    (4, 'Great job!', 3),
+    (5, 'I completely disagree', 2),    
+    (6, 'This is exactly what I was looking for', 1);
+
+    
+    
+
+
+
+
+

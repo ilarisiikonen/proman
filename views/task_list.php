@@ -32,13 +32,46 @@ if (isset($confirm_message)) {
 
     <ul>
         <?php foreach ($tasks as $task) : ?>
-        <li>
+        <li class="card">
             <a href="../controllers/task.php?task_id=<?php echo $task['task_id']; ?>">
             <?php
             echo "Title: " . $task["task_title"] . " (Date: " . $task["task_time"] . ", Project: " . $task["project_id"] .")";
             ?> 
             </a>
-            <form method="post">
+            
+            
+
+            <!-- comment -->
+            <input type="hidden" value="<?php echo $task["task_id"]; ?>" name="showComment">
+
+            <input class="button" type="submit" value="Show Comment">
+
+            <!-- Comment field -->
+            <input type="text" class="comment-field" readonly value="<?php
+                foreach ($comments as $comment) {
+                    if ($comment['task_id'] == $task_id) {
+                        if ($comment['comment'] != "") {
+                              echo $comment['comment'] . " ";
+                        }
+                      
+                    }
+                }
+            ?>">
+
+
+        
+
+
+            <!-- attachment -->
+            <input type="hidden" value="<?php echo $task["task_id"]; ?>" name="showAttachment">
+            <input class="button" type="submit" value="Show Attachment">
+
+
+
+
+
+            <form method="post">   
+            <!-- delete -->
             <input type="hidden" value="<?php echo $task["task_id"]; ?>" name="delete">
             <input class="button" type="submit" value="Delete">
             </form>

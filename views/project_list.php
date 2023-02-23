@@ -32,7 +32,7 @@ if (isset($confirm_message)) {
 
     <ul>
         <?php foreach ($projects as $project) : ?>
-        <li>
+        <li class="card">
             <a href="../controllers/project.php?project_id=<?php echo $project['project_id']; ?>">
                 <?php echo escape($project["project_title"]) ?>
             </a>

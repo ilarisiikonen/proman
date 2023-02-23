@@ -106,29 +106,6 @@ function get_all_projects_count() {
 
 
 
-
-
-/* function get_json() {
-    try {
-        global $connection;
-
-      
-        $sql = 'SELECT JSON_OBJECT("id", p.id, "title", p.title, "category", p.category, "task_title", t.title, "date", t.date_task) FROM projects AS p RIGHT JOIN tasks AS t ON p.id = t.project_id';
-
-        
-        $result = $connection->query($sql);
-
-        return $result;
-    } catch (PDOException $err) {
-        echo $sql . "<br>" . $err->getMessage();
-        exit;
-    }
-}
- */
-
-
-
-
 //TASK
 function get_all_tasks() {
     try {
@@ -224,29 +201,29 @@ function get_task($task_id){
 
 //ADD task
 function add_task($task_id, $task_title, $task_date, $task_time, $project_id)
-{
-    try {
-        global $connection;
-        print_r($_POST);
-       
-        if ($task_id) {
-            $sql = 'UPDATE tasks SET task_title = ?, task_date = ?, task_time = ?, project_id = ? WHERE project_id = ?';
-            $statement = $connection->prepare($sql);
-            $update_task = array($task_title, $task_date, $task_time, $project_id, $task_id);
-            $affectedLines = $statement->execute($update_task);
-        } else {
-            $sql =  'INSERT INTO tasks(task_title, task_date, task_time, project_id) VALUES(?, ?, ?, ?)';
-            $statement = $connection->prepare($sql);
-            $new_task = array($task_title, $task_date, $task_time, $project_id);
-            $affectedLines = $statement->execute($new_task);
-        }
+    {
+        try {
+            global $connection;
+            print_r($_POST);
+        
+            if ($task_id) {
+                $sql = 'UPDATE tasks SET task_title = ?, task_date = ?, task_time = ?, project_id = ? WHERE project_id = ?';
+                $statement = $connection->prepare($sql);
+                $update_task = array($task_title, $task_date, $task_time, $project_id, $task_id);
+                $affectedLines = $statement->execute($update_task);
+            } else {
+                $sql =  'INSERT INTO tasks(task_title, task_date, task_time, project_id) VALUES(?, ?, ?, ?)';
+                $statement = $connection->prepare($sql);
+                $new_task = array($task_title, $task_date, $task_time, $project_id);
+                $affectedLines = $statement->execute($new_task);
+            }
 
-        return $affectedLines;
-    } catch (PDOException $err) {
-        echo $sql . "<br>" . $err->getMessage();
-        exit;
-    }
-}   
+            return $affectedLines;
+        } catch (PDOException $err) {
+            echo $sql . "<br>" . $err->getMessage();
+            exit;
+        }
+    }   
 
 
 
@@ -270,6 +247,60 @@ function get_all_attachment() {
         exit;
     }
 }
+
+/* COMMENT */
+function get_comment($task_id){
+    try {
+        global $connection;
+
+        $sql =  'SELECT comment FROM comments WHERE task_id = ?';
+        $comment = $connection->prepare($sql);
+        $comment->bindValue(1, $task_id, PDO::PARAM_INT);
+        $comment->execute();
+
+        return $comment->fetch();
+    } catch (PDOException $exception) {
+        echo $sql . "<br>" . $exception->getMessage();
+        exit;
+    }
+}
+
+function get_all_comments() {
+    try {
+        global $connection;
+
+        $sql = 'SELECT * FROM comments';
+        $comments= $connection->query($sql);
+
+
+        return $comments;
+    } catch (PDOException $err) {
+        echo $sql . "<br>" . $err->getMessage();
+        exit;
+    }
+}
+
+function add_comment($comment, $task_id) {
+    try {
+        global $connection;
+        echo "add_comment";
+        if ($task_id) {
+            $sql = 'UPDATE comments SET comment = ? WHERE task_id = ?';
+        } else {
+            $sql = 'INSERT INTO comments(comment, task_id) VALUES(?, ?)'; 
+        }
+
+        $statement = $connection->prepare($sql);
+        $new_comment = array($comment, $task_id);
+        $affectedLines = $statement->execute($new_comment);
+
+        return $affectedLines;
+    } catch (PDOException $err) {
+        echo $sql . "<br>" . $err->getMessage();
+        exit;
+    }
+}
+  
 
 
 function add_file($file_path, $task_id, $attachment_id = null) {

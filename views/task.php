@@ -59,6 +59,21 @@ require 'nav.php';
         <input type="number" name="task_time" id="task_time"
         value="<?php echo $task_time; ?>" required>
 
+        <!-- comment -->
+        <label for="comment">
+            <span>Comment:</span>
+        </label>
+        <textarea name="comment" id="comment" placeholder="Add comment">
+            <?php echo $comment; ?>
+        </textarea>
+        <input type="text" class="comment-field" value="<?php foreach ($comments as $comment) {
+                if ($comment["task_id"] == $task["task_id"]) {
+                    echo $comment["comment"];
+                }
+            } ?> ">
+
+
+
        
 
         <br><br>
