@@ -10,6 +10,7 @@ $project_id = '';
 
 if (isset($_GET['task_id'])) {
     list($task_id, $task_title, $task_date, $task_time, $project_id) = get_task($_GET['task_id']);
+    list($comment_id, $comment, $task_id) = get_comment($_GET['task_id']);
 }
 
 $projects = get_all_projects();
@@ -53,21 +54,22 @@ if (isset($_POST['submit'])) {
             }
         }
     }
-
+    
+    print_r($_POST);
     /* comment */
     if (!empty($_POST['comment'])) {
     
-        if (isset($_POST['comment_id'])) {
+        /* if (isset($_POST['comment_id'])) {
             $task_id = $_POST['comment_id'];
-        }
+        } */
     
     
         /* $task_id = trim($_POST['task_id']); */
-        $task_id = trim($_POST['taskt_id']);
+        $task_id = ($_POST['task_id']);
         $comment = trim($_POST['comment']);
-    
+         echo "täällä comment";
         print_r($_POST);
-        echo "täällä comment";
+        
         
         add_comment($comment, $task_id);
         

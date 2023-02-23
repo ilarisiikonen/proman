@@ -49,7 +49,7 @@ if (isset($confirm_message)) {
             <!-- Comment field -->
             <input type="text" class="comment-field" readonly value="<?php
                 foreach ($comments as $comment) {
-                    if ($comment['task_id'] == $task_id) {
+                    if ($comment['task_id'] == $task['task_id']) {
                         if ($comment['comment'] != "") {
                               echo $comment['comment'] . " ";
                         }
@@ -57,6 +57,14 @@ if (isset($confirm_message)) {
                     }
                 }
             ?>">
+
+        <input type="text" class="comment-field" value="<?php foreach ($comments as $comment) {
+                foreach ($tasks as $task) { 
+                if ($comment["task_id"] == $task["task_id"]) {
+                    echo $comment["comment"];
+                }
+            }
+            } ?> ">
 
 
         
