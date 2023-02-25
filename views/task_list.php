@@ -18,6 +18,8 @@ if (isset($confirm_message)) {
 
     <h1><?php echo $title . " (" . $taskCount . ")" ?></h1>
 
+
+
     <button class="button"><a href="/~e2101365/php/proman/controllers/csv_task.php">Download CSV</a></button>
     <button class="button"><a href="/~e2101365/php/proman/controllers/to_json.php?tasks">Download JSON</a></button>
 
@@ -33,47 +35,39 @@ if (isset($confirm_message)) {
     <ul>
         <?php foreach ($tasks as $task) : ?>
         <li class="card">
-            <a href="../controllers/task.php?task_id=<?php echo $task['task_id']; ?>">
-            <?php
-            echo "Title: " . $task["task_title"] . " (Date: " . $task["task_time"] . ", Project: " . $task["project_id"] .")";
-            ?> 
-            </a>
+
+            <!-- TASK -->
+            <h4><?php echo "Title: " . $task["task_title"] . " (Date: " . $task["task_time"] . ", Project: " . $task["project_id"] .")"; ?></h4>
             
             
 
             <!-- comment -->
-            <input type="hidden" value="<?php echo $task["task_id"]; ?>" name="showComment">
-
-            <input class="button" type="submit" value="Show Comment">
-
-            <!-- Comment field -->
-            <input type="text" class="comment-field" readonly value="<?php
-                foreach ($comments as $comment) {
-                    if ($comment['task_id'] == $task['task_id']) {
-                        if ($comment['comment'] != "") {
-                              echo $comment['comment'] . " ";
-                        }
-                      
-                    }
-                }
-            ?>">
-
-        <input type="text" class="comment-field" value="<?php foreach ($comments as $comment) {
-                foreach ($tasks as $task) { 
-                if ($comment["task_id"] == $task["task_id"]) {
-                    echo $comment["comment"];
-                }
-            }
-            } ?> ">
-
-
+            
+                
+            
+                <?php 
+                    foreach ($comments as $comment) {
+                        if ($comment["task_id"] == $task["task_id"]) {
+                            if ($comment["comment"] != "") {
+                               ?><p><?php echo $comment["comment"]/*  . "\n" */; ?></p><?php 
+                            }
+                            
+                        } 
+                    } 
+                ?> 
+            
+               
+                
+                
+            
+            
+                
+            
         
 
 
-            <!-- attachment -->
-            <input type="hidden" value="<?php echo $task["task_id"]; ?>" name="showAttachment">
-            <input class="button" type="submit" value="Show Attachment">
-
+            <!-- Edit -->
+            <a class="button" href="../controllers/task.php?task_id=<?php echo $task['task_id']; ?>">Edit task</a>
 
 
 

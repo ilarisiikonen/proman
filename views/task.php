@@ -60,17 +60,17 @@ require 'nav.php';
         value="<?php echo $task_time; ?>" required>
 
         <!-- comment -->
-        <label for="comment">
+        <!-- <label for="comment">
             <span>Comment:</span>
         </label>
        
-        <input type="text" class="comment-field" name="comment" id="comment" value="<?php foreach ($comments as $comment) {
+        <input type="text" class="comment-field" name="comment" id="comment" value="s<?php /* foreach ($comments as $comment) {
                 foreach ($tasks as $task) { 
                 if ($comment["task_id"] == $task["task_id"]) {
                     echo $comment["comment"];
                 }
             }
-            } ?> ">
+            } */?> "> -->
 
 
 

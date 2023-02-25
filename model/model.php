@@ -111,8 +111,7 @@ function get_all_tasks() {
     try {
         global $connection;
 
-        $sql = 'SELECT tasks.task_id, tasks.task_title, tasks.task_date, tasks.task_time, tasks.project_id, DATE_FORMAT(tasks.task_date, "%d %M %Y"), projects.project_title FROM tasks LEFT JOIN projects ON projects.project_id = tasks.project_id
-        ORDER BY projects.project_title ASC';
+        $sql = 'SELECT tasks.task_id, tasks.task_title, tasks.task_date, tasks.task_time, tasks.project_id, DATE_FORMAT(tasks.task_date, "%d %M %Y"), projects.project_title FROM tasks LEFT JOIN projects ON projects.project_id = tasks.project_id';
         $tasks= $connection->query($sql);
 
 
@@ -218,12 +217,45 @@ function add_task($task_id, $task_title, $task_date, $task_time, $project_id)
                 $affectedLines = $statement->execute($new_task);
             }
 
+
+            
             return $affectedLines;
         } catch (PDOException $err) {
             echo $sql . "<br>" . $err->getMessage();
             exit;
         }
-    }   
+    }  
+
+//add task with comment
+/* function add_task($task_id, $task_title, $task_date, $task_time, $project_id, $comment_id = null, $comment)
+    {
+        try {
+            global $connection;
+            print_r($_POST);
+        
+            if ($task_id) {
+                $sql = 'UPDATE tasks SET task_title = ?, task_date = ?, task_time = ?, project_id = ? WHERE project_id = ?';
+                $statement = $connection->prepare($sql);
+                $update_task = array($task_title, $task_date, $task_time, $project_id, $task_id);
+                $affectedLines = $statement->execute($update_task);
+            } else {
+                $sql =  'INSERT INTO tasks(task_title, task_date, task_time, project_id) VALUES(?, ?, ?, ?)';
+                $statement = $connection->prepare($sql);
+                $new_task = array($task_title, $task_date, $task_time, $project_id);
+                $affectedLines = $statement->execute($new_task);
+            }
+
+
+            $task_id = $connection->lastInsertId($sql);
+            echo "task id: add_task";
+            echo $task_id;
+            add_comment($comment_id, $comment, $task_id);
+            return $affectedLines;
+        } catch (PDOException $err) {
+            echo $sql . "<br>" . $err->getMessage();
+            exit;
+        }
+    }   */ 
 
 
 
@@ -280,11 +312,12 @@ function get_all_comments() {
     }
 }
 
-function add_comment($comment, $task_id) {
+function add_comment($comment_id, $comment, $task_id) {
     try {
         global $connection;
-        echo "add_comment";
-        if ($task_id) {
+        echo "add_commentissaaaaaaa ";
+        print_r($_POST);
+        if ($comment_id) {
             $sql = 'UPDATE comments SET comment = ? WHERE task_id = ?';
         } else {
             $sql = 'INSERT INTO comments(comment, task_id) VALUES(?, ?)'; 

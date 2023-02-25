@@ -7,15 +7,17 @@ $task_title = '';
 $task_date = '';
 $task_time = '';
 $project_id = '';
+$comment_id = '';
+$comment = '';
 
 if (isset($_GET['task_id'])) {
     list($task_id, $task_title, $task_date, $task_time, $project_id) = get_task($_GET['task_id']);
-    list($comment_id, $comment, $task_id) = get_comment($_GET['task_id']);
+    /* list($comment_id, $comment, $task_id) = get_comment($_GET['task_id']); */
 }
 
 $projects = get_all_projects();
 $tasks = get_all_tasks();
-$comments = get_all_comments();
+/* $comments = get_all_comments(); */
 
 
 
@@ -32,9 +34,14 @@ if (isset($_POST['submit'])) {
     $task_title = trim($_POST['task_title']);
     $task_date = trim($_POST['task_date']);
     $task_time = trim($_POST['task_time']);
-   /*  print_r($_POST);
-    echo "täällä";
- */
+
+    /* $comment = trim($_POST['comment']); */
+ 
+
+   
+    print_r($_POST);
+    echo "täällä task controllerissa";
+
     if (empty($project_id) || empty($task_title) || empty($task_date) || empty($task_time)) {
         $error_message = "One or more fields empty";
     } else {
@@ -42,7 +49,7 @@ if (isset($_POST['submit'])) {
         if (taskTitleExists("tasks", $task_title) && $task_id == null) {
             $error_message = "I'm sorry, but looks like " . escape($task_title) . " already exists";
         } else {
-            if (add_task($task_id, $task_title, $task_date, $task_time, $project_id)) {
+            if (add_task($task_id, $task_title, $task_date, $task_time, $project_id/* , $comment_id, $comment */)) {
                  header('Refresh:4; url=task_list.php');
                  if (!empty($task_id)) {
                     $confirm_message = escape($task_title) . ' updated successfully';
@@ -55,25 +62,7 @@ if (isset($_POST['submit'])) {
         }
     }
     
-    print_r($_POST);
-    /* comment */
-    if (!empty($_POST['comment'])) {
-    
-        /* if (isset($_POST['comment_id'])) {
-            $task_id = $_POST['comment_id'];
-        } */
-    
-    
-        /* $task_id = trim($_POST['task_id']); */
-        $task_id = ($_POST['task_id']);
-        $comment = trim($_POST['comment']);
-         echo "täällä comment";
-        print_r($_POST);
-        
-        
-        add_comment($comment, $task_id);
-        
-    }
+
 
 
 }
