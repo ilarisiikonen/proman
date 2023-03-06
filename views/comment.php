@@ -37,7 +37,7 @@ require 'nav.php';
      
         <h3>Previous Comments: </h3>
             
-        <br>
+        
 
         <?php 
             foreach ($comments as $comment) {
@@ -50,9 +50,9 @@ require 'nav.php';
         <br>
         
         <label for="comment">
-            <span>comment:</span>
+            <span>Comment:</span>
         </label>
-        <input type="text" placeholder="New comment" name="comment" id="comment"
+        <input type="text" class="commentFieldx" placeholder="New comment" name="comment" id="comment"
         value="" required>
 
         <br>

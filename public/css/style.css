@@ -75,10 +75,11 @@ body {
   font-weight: 600;
 }
 
-/* 
-#comments {
-  color: blue;
-} */
+
+#comment {
+  width: auto;
+  
+}
 
 
 /* Navigation */
