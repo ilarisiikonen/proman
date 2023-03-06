@@ -4,12 +4,7 @@ require "common.php";
 
 $comment_id = '';
 $comment = '';
-$task_id = '';
-
-
-if (isset($_GET['task_id'])) {
-    list($comment_id, $comment, $task_id) = get_comment($_GET['task_id']);
-}
+$task_id = $_GET['task_id'];
 
 $tasks = get_all_tasks();
 $comments = get_all_comments();
@@ -17,9 +12,9 @@ $comments = get_all_comments();
 if (isset($_POST['submit'])) {
     $comment_id = null;
 
-    if (isset($_POST['comment_id'])) {
+    /* if (isset($_POST['comment_id'])) {
         $comment_id = $_POST['comment_id'];
-    }
+    } */
 
 
     
@@ -37,16 +32,13 @@ if (isset($_POST['submit'])) {
          
             if (add_comment($comment_id, $comment, $task_id)) {
                  header('Refresh:2; url=task_list.php');
-                 if (!empty($task_id)) {
-                    $confirm_message = 'comment updated successfully';
-                 } else {
                     $confirm_message = 'comment added successfully';
-                 }   
-            } else {
-             $error_message = "There's something wrong'";
-            }
+                 } else {
+                    $error_message = "There's something wrong'";
+                }
         
     
-}
 
-require "../views/task.php";
+}
+require "../views/comment.php";
+?>
