@@ -4,6 +4,29 @@ require "connection.php";
 
 $connection = db_connect();
 
+//Login
+function login() {
+    session_start();
+  
+  if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
+    header('Location: index.php');
+    exit;
+  }
+  
+  if (isset($_POST['username']) && isset($_POST['password'])) {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    
+    if ($username === 'ilari' && $password === '123') {
+      $_SESSION['logged_in'] = true;
+      header('Location: index.php');
+      exit;
+    } else {
+        echo '<h1 id="loginError">Wrong username or password</h1>';
+    }
+  }
+}
+
 
 
 //Projects

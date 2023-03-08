@@ -9,12 +9,16 @@ body {
   font-weight: 500;
 }
 
+#loginError {
+  color: red;
+}
+
 .button {
   background-color: #7CB7AF;
     color: rgb(0, 0, 0);
     border: none;
     padding: 10px 25px;
-   /*  margin: 20px 0px 10px 0px; */
+    margin: 20px 0px 10px 0px;
     text-align: center;
     text-decoration: none;
     /* display: inline-block; */
@@ -29,6 +33,10 @@ body {
 
 }
 
+.logout {
+margin: .5rem;
+
+}
 
 .button:hover {
   background-color: #36534f;

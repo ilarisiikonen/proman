@@ -1,8 +1,14 @@
-<?php
+<?php 
 $title = 'theTrackerApp';
 
 ob_start();
-require 'nav.php';
+require '../views/nav.php';
+session_start();
+  
+  if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+    header('Location: login.php');
+    exit;
+  }
 
 ?>
 <div class="welcome">
