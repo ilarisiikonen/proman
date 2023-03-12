@@ -22,9 +22,9 @@ if (isset($_POST['submit'])) {
     $comment = trim($_POST['comment']);
 
 
-
+/* 
     print_r($_POST);
-    echo "täällä comment controllerissa";
+    echo "täällä comment controllerissa"; */
 
    
 

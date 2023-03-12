@@ -21,9 +21,7 @@ if (isset($_GET['error_message'])) {
  $tasks = get_all_tasks();
  $taskCount = get_all_tasks_count();
  $comments = get_all_comments();
- /* $task_comment = get_comment($_POST['task_id']); */
- 
-/*  $attachments = get_all_attachment(); */
+
 
  require "../views/task_list.php";
 ?>

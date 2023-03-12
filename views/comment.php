@@ -23,7 +23,7 @@ require 'nav.php';
 
     <form method="post" >
         
-        <!-- 
+        <!-- view mockup
             task
             vanhat commentit
             uus commentti + add

@@ -59,19 +59,7 @@ require 'nav.php';
         <input type="number" name="task_time" id="task_time"
         value="<?php echo $task_time; ?>" required>
 
-        <!-- comment -->
-        <!-- <label for="comment">
-            <span>Comment:</span>
-        </label>
-       
-        <input type="text" class="comment-field" name="comment" id="comment" value="s<?php /* foreach ($comments as $comment) {
-                foreach ($tasks as $task) { 
-                if ($comment["task_id"] == $task["task_id"]) {
-                    echo $comment["comment"];
-                }
-            }
-            } */?> "> -->
-
+     
 
 
        

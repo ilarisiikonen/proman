@@ -22,7 +22,7 @@ login();
   <input class="button login" type="submit" value="Login">
 </form>
 
-<!-- <a class="button" href="../www.google.com">Forgot password?</a> -->
+<!-- <a class="button" href="#>Forgot password?</a> -->
 <?php
 $content = ob_get_clean();
 include '../views/layout.php';

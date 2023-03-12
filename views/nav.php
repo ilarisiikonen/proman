@@ -27,7 +27,7 @@ const navbarLinks = document.getElementById('navbar-links');
 
 toggle.addEventListener('click', () => {
     navbarLinks.classList.toggle('active')
-    console.log("scripti navis")
+
 })
 
 
